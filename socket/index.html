@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .marginTop {
+          margin-top: 25px;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <h4>채팅페이지입니다</h4>
+    
+    <!-- The message 'ㅎㅇ' is displayed on the server. -->
+    <button id="send" onclick="socket.send('ㅎㅇ')">서버에 메세지 보내기(ㅎㅇ)</button> 
+
+    <!-- The message entered in input is sent to the server -->
+    <div class="marginTop">
+        <input type="text" id="message" placeholder="메시지를 입력하세요">
+        <button id="send" onclick="sendMessage()">메세지 보내기</button>
+    </div>
+
+    <!-- This is the JS code that makes the above code work. -->
+    <script>
+        let socket = new WebSocket('ws://localhost:8081');
+        const input = document.getElementById('message');
+
+        function sendMessage() {
+            const message = input.value;
+            socket.send(message);
+        }
+
+        socket.onmessage = function(event) {
+            console.log(`서버에서 받은 메시지: ${event.data}`);
+        };
+    </script>
+</body>
+</html>
